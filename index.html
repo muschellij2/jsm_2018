@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Neuroconductor and Reproducibility: Imaging in R</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="generator" content="pandoc" />
+
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <base target="_blank">
+
+  <script type="text/javascript">
+    var SLIDE_CONFIG = {
+      // Slide settings
+      settings: {
+                title: 'Neuroconductor and Reproducibility: Imaging in R',
+                        subtitle: '<a href="https://github.com/muschellij2/Neuroimaging_in_R" class="uri">https://github.com/muschellij2/Neuroimaging_in_R</a>',
+                useBuilds: true,
+        usePrettify: true,
+        enableSlideAreas: true,
+        enableTouch: true,
+                        favIcon: 'bloomberg.logo.small.horizontal.blue.png',
+              },
+
+      // Author information
+      presenters: [
+            {
+        name:  'John Muschelli <a href="http://johnmuschelli.com/jsm_2018" class="uri">http://johnmuschelli.com/jsm_2018</a>' ,
+        company: '',
+        gplus: '',
+        twitter: '',
+        www: '',
+        github: ''
+      },
+            ]
+    };
+  </script>
+
+  <link rel="stylesheet" type="text/css" href="papaya.css?version=0.8&build=979" />
+    <script type="text/javascript" src="papaya.js?version=0.8&build=979">
+      
+    </script>
+      <script type="text/javascript"> 
+        var params = []; 
+        params["images"] = ["T1.nii.gz"]; 
+        </script>
+  <link href="index_files/ioslides-13.5.1/fonts/fonts.css" rel="stylesheet" />
+  <link href="index_files/ioslides-13.5.1/theme/css/default.css" rel="stylesheet" />
+  <link href="index_files/ioslides-13.5.1/theme/css/phone.css" rel="stylesheet" />
+  <script src="index_files/ioslides-13.5.1/js/modernizr.custom.45394.js"></script>
+  <script src="index_files/ioslides-13.5.1/js/prettify/prettify.js"></script>
+  <script src="index_files/ioslides-13.5.1/js/prettify/lang-r.js"></script>
+  <script src="index_files/ioslides-13.5.1/js/prettify/lang-yaml.js"></script>
+  <script src="index_files/ioslides-13.5.1/js/hammer.js"></script>
+  <script src="index_files/ioslides-13.5.1/js/slide-controller.js"></script>
+  <script src="index_files/ioslides-13.5.1/js/slide-deck.js"></script>
+
+  <style type="text/css">
+
+    b, strong {
+      font-weight: bold;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    slides > slide {
+      -webkit-transition: all 0.4s ease-in-out;
+      -moz-transition: all 0.4s ease-in-out;
+      -o-transition: all 0.4s ease-in-out;
+      transition: all 0.4s ease-in-out;
+    }
+
+    .auto-fadein {
+      -webkit-transition: opacity 0.6s ease-in;
+      -webkit-transition-delay: 0.4s;
+      -moz-transition: opacity 0.6s ease-in 0.4s;
+      -o-transition: opacity 0.6s ease-in 0.4s;
+      transition: opacity 0.6s ease-in 0.4s;
+      opacity: 0;
+    }
+
+    slides > slide:not(.nobackground):before {
+      font-size: 12pt;
+      content: "";
+      position: absolute;
+      bottom: 20px;
+      left: 60px;
+      background: url(bloomberg.logo.small.horizontal.blue.png) no-repeat 0 50%;
+      -webkit-background-size: 30px 30px;
+      -moz-background-size: 30px 30px;
+      -o-background-size: 30px 30px;
+      background-size: 30px 30px;
+      padding-left: 40px;
+      height: 30px;
+      line-height: 1.9;
+    }
+  </style>
+
+  <link rel="stylesheet" href="neuroconductor.css" type="text/css" />
+
+</head>
+
+<body style="opacity: 0">
+
+<slides class="layout-widescreen">
+
+  <slide class="title-slide segue nobackground">
+        <aside class="gdbar"><img src="bloomberg.logo.small.horizontal.blue.png"></aside>
+        <!-- The content of this hgroup is replaced programmatically through the slide_config.json. -->
+    <hgroup class="auto-fadein">
+      <h1 data-config-title><!-- populated from slide_config.json --></h1>
+      <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
+      <p data-config-presenter><!-- populated from slide_config.json --></p>
+          </hgroup>
+  </slide>
+
+<script type="text/javascript" src="papaya.js"></script>
+
+<script type="text/css" src="papaya.css"></script>
+
+<style type="text/css">
+article {
+  font-size: 30pt;
+}
+</style>
+
+<slide class=""><hgroup><h2></h2></hgroup><article >
+
+<p style="font-size:10pt">
+
+<a href='https://imgflip.com/i/2ep2jb' title=''>https://imgflip.com/i/2ep2jb</a>
+
+</p>
+
+<p><img src="figure/reproc_definition.jpg" width="58%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>&ldquo;Reproducibility&rdquo; in General</h2></hgroup><article  id="reproducibility-in-general">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Neuroimaging Reproducibility</h2></hgroup><article  id="neuroimaging-reproducibility">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Neuroimaging Reproducibility Starts w/Data</h2></hgroup><article  id="neuroimaging-reproducibility-starts-wdata">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Controversy in Neuroimaging: Won’t Reproduce!</h2></hgroup><article  id="controversy-in-neuroimaging-wont-reproduce">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-5-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Controversy in Neuroimaging: Won’t Reproduce!</h2></hgroup><article  id="controversy-in-neuroimaging-wont-reproduce-1">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Software: Versions!</h2></hgroup><article  id="software-versions">
+
+<p><span class="cite">Gronenschild et al. (2012)</span> (bold added):</p>
+
+<blockquote>
+<p>&ldquo;differences were on average 8.8±6.6% (range 1.3–64.0%) (volume) and 2.8±1.3% (1.1–7.7%) (cortical thickness). About a factor two smaller differences were detected between Macintosh and Hewlett-Packard workstations and between OSX 10.5 and OSX 10.6. <strong>The observed differences are similar in magnitude as effect sizes reported in accuracy evaluations and neurodegenerative studies.</strong>&rdquo;</p>
+</blockquote>
+
+</article></slide><slide class=""><hgroup><h2>Minimum Reproducibility Goal</h2></hgroup><article  id="minimum-reproducibility-goal">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-7-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Controversy: Different Pipelines</h2></hgroup><article  id="controversy-different-pipelines">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-8-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>It’s typical to have lots of software choices</h2></hgroup><article  id="its-typical-to-have-lots-of-software-choices">
+
+<p><img src="figure/carp_2012_figure_full.jpg" style="width:600px; display: block; margin: auto;" alt="flow"></p>
+
+<p>Carp, Joshua. &ldquo;The secret lives of experiments: methods reporting in the fMRI literature.&rdquo; Neuroimage 63.1 (2012): 289-300. <span class="cite">(Carp 2012)</span></p>
+
+</article></slide><slide class=""><hgroup><h2>Controversy: Ground Truth? (Replication)</h2></hgroup><article  id="controversy-ground-truth-replication">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-9-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Within-Population Replication (CV)</h2></hgroup><article  id="within-population-replication-cv">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-10-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Genomics is one of the best examples of strives in Reproducibility: Data + Code Repositories</h2></hgroup><article  id="genomics-is-one-of-the-best-examples-of-strives-in-reproducibility-data-code-repositories">
+
+</article></slide><slide class=""><hgroup><h2>Bioinformatics Repository: Bioconductor<br> <img src="figure/bioconductor.png" style="width:65%; display: inline; margin: auto;" alt="flow"></h2></hgroup><article  id="bioinformatics-repository-bioconductor">
+
+<ul>
+<li>centralized bioinformatics/genomics packages</li>
+<li>large community/number of packages (&gt; 1300)</li>
+<li><strong>published tutorials and workflows</strong></li>
+<li>additional requirements to CRAN (e.g. packages need vignettes)</li>
+</ul>
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2><img src="figure/neuroconductor_brain_type_bbg.png" style="width:80%; display: inline; margin: auto;" alt="flow"><br> An R Platform for <br> Medical Imaging Analysis</h2></hgroup><article  id="an-r-platform-for-medical-imaging-analysis">
+
+</article></slide><slide class=""><hgroup><h2>What is Neuroconductor?</h2></hgroup><article  id="what-is-neuroconductor">
+
+<ol>
+<li>A community of developers and users of R packages for imaging</li>
+<li>A website <a href='https://neuroconductor.org/' title=''>https://neuroconductor.org/</a>.
+
+<ul>
+<li>with tutorials and help</li>
+</ul></li>
+<li>A team helping developers and users (John, Adi Gherman, Ciprian Crainiceanu, Brian Caffo)</li>
+<li>A centralized repository of maintained packages</li>
+</ol>
+
+</article></slide><slide class=""><hgroup><h2>Goal: Centralize the packages (currently 73)</h2></hgroup><article  id="goal-centralize-the-packages-currently-73">
+
+<p><img src="figure/neuroc_list_packages.png" style="width:100%; display: inline; margin: auto;" alt="flow"></p>
+
+</article></slide><slide class=""><hgroup><h2>Many Cases in Neuroimaging: Why?</h2></hgroup><article  id="many-cases-in-neuroimaging-why">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Data: Submitting Not Required</h2></hgroup><article  id="data-submitting-not-required">
+
+<table border="1">
+
+<tr>
+
+<td height="250">
+
+<img src="figure/oasis.png" style="width:60%">
+
+</td>
+
+<td height="250">
+
+<img src="figure/biobank.png" style="width:80%">
+
+</td>
+
+<td height="250">
+
+<img src="figure/neurovault.png" style="width:80%">
+
+</td>
+
+<td height="250">
+
+<img src="figure/tcia.png" style="width:80%">
+
+</td>
+
+</tr>
+
+<tr>
+
+<td height="250">
+
+<img src="figure/ADNI.png" style="width:60%">
+
+</td>
+
+<td height="250">
+
+<img src="figure/coins.gif" style="width:80%">
+
+</td>
+
+<td height="250">
+
+<img src="figure/INDI.png" style="width:70%">
+
+</td>
+
+<td height="250">
+
+<img src="figure/fitbir.png" style="width:70%">
+
+</td>
+
+</tr>
+
+</table>
+
+</article></slide><slide class=""><hgroup><h2>R packages to access these repositories</h2></hgroup><article  id="r-packages-to-access-these-repositories">
+
+<ul>
+<li>so if there, need ability to access</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Seldomly Reported Inclusion/Exclusion</h2></hgroup><article  id="seldomly-reported-inclusionexclusion">
+
+<div style="font-size:10pt">
+<span class="cite">(Patil, Peng, and Leek 2016)</span></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-13-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+<p><img src="index_files/figure-html/unnamed-chunk-14-1.png" width="85%" style="display: block; margin: auto;" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Opportunities: RCT/CONSORT diagrams</h2></hgroup><article  id="opportunities-rctconsort-diagrams">
+
+<div style="font-size:10pt">
+<a href='https://imgflip.com/i/2bltgh' title=''>https://imgflip.com/i/2bltgh</a></div>
+
+<p><img src="figure/consort.jpg" width="90%" /></p>
+
+</article></slide><slide class=""><hgroup><h2>What we need: tutorials</h2></hgroup><article  id="what-we-need-tutorials">
+
+<p><img src="figure/tutorials.png" width="95%" /></p>
+
+</article></slide><slide class=""><hgroup><h2></h2></hgroup><article >
+
+<div class="container">
+<div id="left_col2">
+<h2>
+
+Need Workflows
+
+</h2>
+
+<div style="font-size: 24pt;">
+<ul>
+<li>all R code
+
+<ul>
+<li>interface/pipeline tool</li>
+<li>&ldquo;native&rdquo; R code</li>
+</ul></li>
+</ul>
+
+<p>Complete pipeline</p>
+
+<ul>
+<li>preprocessing and analysis</li>
+</ul></div></div>
+
+<div id="right_col2">
+<img src="figure/workflow_edited_R.png" style="width:70%; display: block; margin: auto;" alt="flow"></div></div>
+
+</article></slide><slide class=""><hgroup><h2>Publishing Software should be Rewarded</h2></hgroup><article  id="publishing-software-should-be-rewarded">
+
+<ul>
+<li>R Journal - see <code>rticles::rjournal_article()</code></li>
+<li>F1000 - <a href='https://f1000research.com/collections/Neuroconductor' title=''>https://f1000research.com/collections/Neuroconductor</a></li>
+<li>JOSS - <a href='https://joss.theoj.org/' title=''>https://joss.theoj.org/</a></li>
+<li>JSS - see <code>rticles::jss_article()</code></li>
+<li><code>cranlogs</code> track downloads</li>
+<li>neuroconductor API tracks downloads</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Conclusions</h2></hgroup><article  id="conclusions">
+
+<ul>
+<li>Need data submitted (journals need to help)
+
+<ul>
+<li>but need easy tools to access the data</li>
+</ul></li>
+<li>Analysis tools exist but need more</li>
+<li>Develop more standardization like BioConductor
+
+<ul>
+<li>standard data structures</li>
+<li>publishable pipelines</li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Bibliography</h2></hgroup><article  id="bibliography">
+
+<div style = "font-size: 12pt">
+
+
+
+<div class="references" id="refs">
+<div id="ref-carp2012secret">
+<p>Carp, Joshua. 2012. “The Secret Lives of Experiments: Methods Reporting in the fMRI Literature.” <em>Neuroimage</em> 63 (1). Elsevier:289–300.</p></div>
+
+<div id="ref-gronenschild2012effects">
+<p>Gronenschild, Ed HBM, Petra Habets, Heidi IL Jacobs, Ron Mengelers, Nico Rozendaal, Jim Van Os, and Machteld Marcelis. 2012. “The Effects of Freesurfer Version, Workstation Type, and Macintosh Operating System Version on Anatomical Volume and Cortical Thickness Measurements.” <em>PloS One</em> 7 (6). Public Library of Science:e38234.</p></div>
+
+<div id="ref-Patil066803">
+<p>Patil, Prasad, Roger D. Peng, and Jeffrey Leek. 2016. “A Statistical Definition for Reproducibility and Replicability.” <em>bioRxiv</em>. Cold Spring Harbor Laboratory. <a href='https://doi.org/10.1101/066803' title=''>https://doi.org/10.1101/066803</a>.</p></div></div></article></slide>
+
+
+  <slide class="backdrop"></slide>
+
+</slides>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!-- map slide visiblity events into shiny -->
+<script>
+  (function() {
+    if (window.jQuery) {
+       window.jQuery(document).on('slideleave', function(e) {
+         window.jQuery(e.target).trigger('hidden');
+      });
+       window.jQuery(document).on('slideenter', function(e) {
+         window.jQuery(e.target).trigger('shown');
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,14 @@
+dependencies:
+ - name: papaya
+   version: 0.1434
+   src: htmlwidgets/papaya
+   script:
+    - papaya.js
+    - main.js
+   stylesheet:
+    - papaya.css
+    - base.css
+ # - name: sampleimage
+ #   version: 1
+ #   src: htmlwidgets/sample-image
+ #   script: sample-image.js

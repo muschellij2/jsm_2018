@@ -1,0 +1,337 @@
+---
+title: "Neuroconductor and Reproducibility: Imaging in R"
+author: "John Muschelli http://johnmuschelli.com/jsm_2018"
+logo: bloomberg.logo.small.horizontal.blue.png
+output:
+  ioslides_presentation:
+    css: neuroconductor.css
+    includes:
+      in_header: header.html
+    md_extensions: -markdown_in_html_blocks
+    self_contained: no
+    widescreen: yes
+subtitle: https://github.com/muschellij2/Neuroimaging_in_R
+bibliography: refs.bib
+---
+
+<script type="text/javascript" src="papaya.js"></script>
+<script type="text/css" src="papaya.css"></script>
+
+
+
+<style type="text/css">
+article {
+  font-size: 30pt;
+}
+</style>
+
+
+```{r knit-setup, include = FALSE}
+library(knitr)
+opts_chunk$set(cache = FALSE, comment = "", warning = FALSE, echo = FALSE,
+               message = FALSE)
+library(ggplot2)
+library(readr)
+library(dplyr)
+library(directlabels)
+
+# library(scales)
+# library(ANTsR)
+# library(extrantsr)
+# 
+# options(fsl.path = "/usr/local/fsl/")
+# options(fsl.outputtype = "NIFTI_GZ")
+# library(fslr)
+# 
+# library(knitcitations)
+# library(RefManageR)
+# cleanbib()
+# options(citation_format = "pandoc")
+# bib <- ReadBib("index.bib", check = TRUE)
+# 
+# hook1 <- function(x){ gsub("```\n*```r*\n*", "", x) }
+# hook2 <- function(x){ gsub("```\n+```\n", "", x) }
+# knit_hooks$set(document = hook2)
+```
+
+
+----
+<p style="font-size:10pt">https://imgflip.com/i/2ep2jb</p>
+```{r, out.width = "58%", fig.align = "center"}
+knitr::include_graphics("figure/reproc_definition.jpg", dpi = NA)
+```
+
+
+
+
+
+
+## "Reproducibility" in General
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+library(scifigure)
+exps <- init_experiments(2, names = c("Original", "Reproduction"))
+scifigure::sci_figure(exps, showlegend = FALSE)
+```
+
+## Neuroimaging Reproducibility 
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+hide_stages = c("population", "question", "hypothesis", "experimental_design", 
+"experimenter")
+exps[ hide_stages, "Reproduction"] = "unobserved"
+scifigure::sci_figure(exps)
+```
+
+
+## Neuroimaging Reproducibility Starts w/Data
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+hide_stages = c("population", "question", "hypothesis", "experimental_design", 
+"experimenter", "analysis_plan")
+scifigure::sci_figure(exps, showlegend = FALSE, hide_stages = hide_stages)
+```
+
+## Controversy in Neuroimaging: Won't Reproduce!
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["data", "Reproduction"] <- "observed"
+exps["code", "Reproduction"] <- "observed"
+exps["analysis_plan", "Reproduction"] <- "observed"
+exps["estimate", "Reproduction"] <- "different"
+exps["claim", "Reproduction"] <- "different"
+scifigure::sci_figure(exps, hide_stages = hide_stages)
+```
+
+
+## Controversy in Neuroimaging: Won't Reproduce!
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
+```
+
+## Software: Versions!
+
+@gronenschild2012effects (bold added):
+
+> "differences were on average 8.8±6.6% (range 1.3–64.0%) (volume) and 2.8±1.3% (1.1–7.7%) (cortical thickness). About a factor two smaller differences were detected between Macintosh and Hewlett-Packard workstations and between OSX 10.5 and OSX 10.6. **The observed differences are similar in magnitude as effect sizes reported in accuracy evaluations and neurodegenerative studies.** "
+
+
+## Minimum Reproducibility Goal 
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+nexps <- init_experiments(2, names = c("Original", "Reproduction"))
+nexps["analyst", "Reproduction"] <- "different"
+scifigure::sci_figure(nexps, hide_stages = hide_stages)
+```
+
+
+
+## Controversy: Different Pipelines
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["data", "Reproduction"] <- "observed"
+exps["code", "Reproduction"] <- "different"
+exps["analyst", "Reproduction"] <- "different"
+exps["analysis_plan", "Reproduction"] <- "observed"
+exps["estimate", "Reproduction"] <- "different"
+exps["claim", "Reproduction"] <- "different"
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
+```
+
+## It's typical to have lots of software choices
+
+<img src="figure/carp_2012_figure_full.jpg" style="width:600px; display: block; margin: auto;" alt="flow">
+
+Carp, Joshua. "The secret lives of experiments: methods reporting in the fMRI literature." Neuroimage 63.1 (2012): 289-300. [@carp2012secret]
+
+
+## Controversy: Ground Truth? (Replication)
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["estimate", "Reproduction"] <- "incorrect"
+exps["claim", "Reproduction"] <- "incorrect"
+exps["code", "Reproduction"] <- "different"
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
+```
+
+
+
+## Within-Population Replication (CV)
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+ee = exps
+ee[, "Reproduction"] = "observed"
+ee["data", "Reproduction"] = "different"
+scifigure::sci_figure(ee, hide_stages = hide_stages)
+```
+
+
+# Genomics is one of the best examples of strives in Reproducibility: Data + Code Repositories
+
+## Bioinformatics Repository: Bioconductor<br> <img src="figure/bioconductor.png" style="width:65%; display: inline; margin: auto;" alt="flow"> 
+
+- centralized bioinformatics/genomics packages
+- large community/number of packages (> 1300)
+- **published tutorials and workflows**
+- additional requirements to CRAN (e.g. packages need vignettes)
+
+
+```{r, cache = TRUE, echo = FALSE, results='hide'}
+url = httr:::GET("https://neuroconductor.org/list-packages/all")
+cr = httr::content(url)
+tab = rvest::html_table(cr)[[1]]
+nr = nrow(tab)
+```
+
+
+# <img src="figure/neuroconductor_brain_type_bbg.png" style="width:80%; display: inline; margin: auto;" alt="flow"><br> An R Platform for <br> Medical Imaging Analysis
+
+
+
+## What is Neuroconductor?
+
+1.  A community of developers and users of R packages for imaging
+2.  A website [https://neuroconductor.org/](https://neuroconductor.org/).
+    - with tutorials and help
+3.  A team helping developers and users (John, Adi Gherman, Ciprian Crainiceanu, Brian Caffo)
+4.  A centralized repository of maintained packages
+
+
+## Goal: Centralize the packages (currently `r nr`)
+
+  <img src="figure/neuroc_list_packages.png" style="width:100%; display: inline; margin: auto;" alt="flow">
+
+
+## Many Cases in Neuroimaging: Why?
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["data", "Reproduction"] <- "unobserved"
+exps["code", "Reproduction"] <- "unobserved"
+exps["analyst", "Reproduction"] <- "different"
+exps["estimate", "Reproduction"] <- "unobserved"
+exps["claim", "Reproduction"] <- "unobserved"
+scifigure::sci_figure(exps, hide_stages = hide_stages)
+```
+
+
+## Data: Submitting Not Required
+
+<table border="1">
+    <tr>
+    <td height="250"><img src="figure/oasis.png" style="width:60%"></td>
+    <td height="250"><img src="figure/biobank.png" style="width:80%"></td>
+    <td height="250"><img src="figure/neurovault.png" style="width:80%"></td>
+    <td height="250"><img src="figure/tcia.png" style="width:80%"></td>
+    </tr>
+    <tr>
+    <td height="250"><img src="figure/ADNI.png" style="width:60%"></td>
+    <td height="250"><img src="figure/coins.gif" style="width:80%"></td>
+    <td height="250"><img src="figure/INDI.png" style="width:70%"></td>
+    <td height="250"><img src="figure/fitbir.png" style="width:70%"></td>
+    </tr>
+</table>
+
+## R packages to access these repositories
+
+- so if there, need ability to access
+
+
+## Seldomly Reported Inclusion/Exclusion
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps <- init_experiments(2, names = c("Original", "Reproduction"))
+hide_stages2 = c("population", "experimental_design", 
+"experimenter", "data")
+hide_stages2 = rownames(exps)[!(rownames(exps) %in% hide_stages2)]
+exps[ "population", "Reproduction"] = "unobserved"
+scifigure::sci_figure(exps, hide_stages = hide_stages2)
+```
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["data", "Reproduction"] <- "unobserved"
+exps["code", "Reproduction"] <- "unobserved"
+exps["analyst", "Reproduction"] <- "different"
+exps["estimate", "Reproduction"] <- "unobserved"
+exps["claim", "Reproduction"] <- "unobserved"
+scifigure::sci_figure(exps, hide_stages = hide_stages)
+```
+
+## Opportunities: RCT/CONSORT diagrams
+
+<div style="font-size:10pt">https://imgflip.com/i/2bltgh</div>
+```{r, out.width = "90%"}
+knitr::include_graphics("figure/consort.jpg")
+```
+
+## What we need: tutorials
+
+```{r, out.width = "95%"}
+knitr::include_graphics("figure/tutorials.png")
+```
+
+----
+<div class="container"> 
+<div id="left_col2"> 
+  <h2>Need Workflows</h2>
+<div style='font-size: 24pt;'>
+  
+- all R code
+    - interface/pipeline tool
+    - "native" R code
+
+Complete pipeline
+  
+  - preprocessing and analysis
+</div>
+  </div>    
+  <div id="right_col2">
+<img src="figure/workflow_edited_R.png" style="width:70%; display: block; margin: auto;" alt="flow">
+  </div>
+</div>
+
+
+## Publishing Software should be Rewarded
+
+- R Journal - see `rticles::rjournal_article()`
+- F1000 - https://f1000research.com/collections/Neuroconductor
+- JOSS - https://joss.theoj.org/
+- JSS - see `rticles::jss_article()`
+- `cranlogs` track downloads
+- neuroconductor API tracks downloads
+
+
+## Conclusions
+
+- Need data submitted (journals need to help)
+  - but need easy tools to access the data
+- Analysis tools exist but need more
+- Develop more standardization like BioConductor
+    - standard data structures
+    - publishable pipelines
+
+## Bibliography
+
+<div style = "font-size: 12pt">
