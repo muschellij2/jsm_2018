@@ -313,6 +313,18 @@ Complete pipeline
 </div>
 
 
+## R Packages to Download Data
+
+1.  nitrcbot - download f/NITRC
+2.  neurovault - access neurovault 
+2.  MNITemplate - population-level "template" image
+3.  EveTemplate - different template image
+4.  kirby21 - sample data with multimodal imaging
+8.  neurohcp - Human Connectome Project
+9.  Rxnat - XNAT interface
+9.  malf.templates - template images f/label fusion
+
+
 ## Publishing Software should be Rewarded
 
 - R Journal - see `rticles::rjournal_article()`
