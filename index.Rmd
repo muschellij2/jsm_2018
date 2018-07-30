@@ -77,6 +77,38 @@ cols = c("#D20000", "blue", "#CDCDCD", "black")
 scifigure::sci_figure(exps, showlegend = FALSE, cols = cols)
 ```
 
+
+## Seldomly Reported Inclusion/Exclusion
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+hide_stages = c("population", "question", "hypothesis", "experimental_design", 
+"experimenter", "analysis_plan")
+exps <- init_experiments(2, names = c("Original", "Reproduction"))
+hide_stages2 = c("population", "experimental_design", 
+"experimenter", "data")
+hide_stages2 = rownames(exps)[!(rownames(exps) %in% hide_stages2)]
+exps[ "population", "Reproduction"] = "unobserved"
+scifigure::sci_figure(exps, hide_stages = hide_stages2)
+```
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["data", "Reproduction"] <- "unobserved"
+exps["code", "Reproduction"] <- "unobserved"
+exps["analyst", "Reproduction"] <- "different"
+exps["estimate", "Reproduction"] <- "unobserved"
+exps["claim", "Reproduction"] <- "unobserved"
+scifigure::sci_figure(exps, hide_stages = hide_stages)
+```
+
+## Solutions: RCT/CONSORT diagrams
+
+<div style="font-size:10pt">https://imgflip.com/i/2bltgh</div>
+```{r, out.width = "90%"}
+knitr::include_graphics("figure/consort.jpg")
+```
+
 ## Neuroimaging Reproducibility 
 
 <div style="font-size:10pt">[@Patil066803]</div>
@@ -105,6 +137,7 @@ scifigure::sci_figure(exps, showlegend = FALSE, hide_stages = hide_stages, cols 
 <div style="font-size:10pt">[@Patil066803]</div>
 
 ```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["analyst", "Reproduction"] <- "observed"
 exps["data", "Reproduction"] <- "observed"
 exps["code", "Reproduction"] <- "observed"
 exps["analysis_plan", "Reproduction"] <- "observed"
@@ -319,34 +352,6 @@ scifigure::sci_figure(exps, hide_stages = hide_stages)
 9.  Rxnat - XNAT interface (NITRC)
 
 
-## Seldomly Reported Inclusion/Exclusion
-
-<div style="font-size:10pt">[@Patil066803]</div>
-
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-exps <- init_experiments(2, names = c("Original", "Reproduction"))
-hide_stages2 = c("population", "experimental_design", 
-"experimenter", "data")
-hide_stages2 = rownames(exps)[!(rownames(exps) %in% hide_stages2)]
-exps[ "population", "Reproduction"] = "unobserved"
-scifigure::sci_figure(exps, hide_stages = hide_stages2)
-```
-
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-exps["data", "Reproduction"] <- "unobserved"
-exps["code", "Reproduction"] <- "unobserved"
-exps["analyst", "Reproduction"] <- "different"
-exps["estimate", "Reproduction"] <- "unobserved"
-exps["claim", "Reproduction"] <- "unobserved"
-scifigure::sci_figure(exps, hide_stages = hide_stages)
-```
-
-## Opportunities: RCT/CONSORT diagrams
-
-<div style="font-size:10pt">https://imgflip.com/i/2bltgh</div>
-```{r, out.width = "90%"}
-knitr::include_graphics("figure/consort.jpg")
-```
 
 
 ## Conclusions
