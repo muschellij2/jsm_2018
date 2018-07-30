@@ -80,9 +80,10 @@ scifigure::sci_figure(exps, showlegend = FALSE, cols = cols)
 
 ## Seldomly Reported Inclusion/Exclusion
 
-<div style="font-size:10pt">[@Patil066803]</div>
+<div class="left-half">
 
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+<div style="font-size:10pt">[@Patil066803]</div>
+```{r crop_this_figure, echo = FALSE, out.width = "160%", fig.align = "left", fig.process = function(x) knitr::plot_crop(x, quiet = FALSE), include = FALSE}
 hide_stages = c("population", "question", "hypothesis", "experimental_design", 
 "experimenter", "analysis_plan")
 exps <- init_experiments(2, names = c("Original", "Reproduction"))
@@ -90,23 +91,25 @@ hide_stages2 = c("population", "experimental_design",
 "experimenter", "data")
 hide_stages2 = rownames(exps)[!(rownames(exps) %in% hide_stages2)]
 exps[ "population", "Reproduction"] = "unobserved"
-scifigure::sci_figure(exps, hide_stages = hide_stages2)
+scifigure::sci_figure(exps, hide_stages = hide_stages2, showlegend = FALSE)
 ```
 
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-exps["data", "Reproduction"] <- "unobserved"
-exps["code", "Reproduction"] <- "unobserved"
-exps["analyst", "Reproduction"] <- "different"
-exps["estimate", "Reproduction"] <- "unobserved"
-exps["claim", "Reproduction"] <- "unobserved"
-scifigure::sci_figure(exps, hide_stages = hide_stages)
+```{r, out.width = "100%"}
+knitr::include_graphics("index_files/figure-html/crop_this_figure-1.png")
 ```
+
+</div>
+<div class="right-half">
+<div style="font-size:10pt">https://imgflip.com/i/2bltgh</div>
+```{r, out.width = "120%", fig.align="right"}
+knitr::include_graphics("figure/consort.jpg")
+```
+</div>
 
 ## Solutions: RCT/CONSORT diagrams
 
-<div style="font-size:10pt">https://imgflip.com/i/2bltgh</div>
-```{r, out.width = "90%"}
-knitr::include_graphics("figure/consort.jpg")
+```{r, out.width = "65%", fig.align="center"}
+knitr::include_graphics("figure/consort.png")
 ```
 
 ## Neuroimaging Reproducibility 
@@ -147,14 +150,28 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, cols = cols)
 ```
 
 
-## Software: Versions!
+## @gronenschild2012effects: Freesurfer Thickness
+```{r, out.width = "90%"}
+knitr::include_graphics("figure/freesurfer_problem1.png")
+```
 
-@gronenschild2012effects (bold added):
 
-> "differences were on average 8.8±6.6% (range 1.3–64.0%) (volume) and 2.8±1.3% (1.1–7.7%) (cortical thickness). About a factor two smaller differences were detected between Macintosh and Hewlett-Packard workstations and between OSX 10.5 and OSX 10.6. **The observed differences are similar in magnitude as effect sizes reported in accuracy evaluations and neurodegenerative studies.** "
+## @gronenschild2012effects: Freesurfer Thickness
+```{r, out.width = "90%"}
+knitr::include_graphics("figure/freesurfer_problem2.png")
+```
 
 
-## Solutions: Containers
+## @gronenschild2012effects: Freesurfer Thickness
+```{r, out.width = "90%"}
+knitr::include_graphics("figure/freesurfer_problem3.png")
+```
+
+## @gronenschild2012effects: Freesurfer Thickness
+
+"**The observed differences are similar in magnitude as effect sizes reported in accuracy evaluations and neurodegenerative studies.**"
+
+## "Solutions"/Debugging: Containers
 
 <div class="left-half">
 Docker
@@ -164,20 +181,11 @@ knitr::include_graphics("figure/docker.png")
 </div>
 <div class="right-half">
 Singularity
-```{r, out.width = "100%"}
+```{r, out.width = "80%"}
 knitr::include_graphics("figure/singularity.png")
 ```
 </div>
 
-
-## Same figure: different way
-
-<div style="font-size:10pt">[@Patil066803]</div>
-
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
-                      cols = cols)
-```
 
 
 ## Not Same as "Choosing a Pipeline"
@@ -188,7 +196,7 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
 exps["code", "Reproduction"] <- "different"
 exps["estimate", "Reproduction"] <- "different"
 exps["claim", "Reproduction"] <- "different"
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+scifigure::sci_figure(exps, hide_stages = hide_stages,
                       cols = cols)
 ```
 
@@ -196,8 +204,8 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
 
 <div class="left-half">
 
-Many combinations [@yan2013comprehensive]:
-```{r, out.width = "80%"}
+ <p style="font-size:20pt">Many combinations [@yan2013comprehensive]:</p>
+```{r, out.width = "75%"}
 knitr::include_graphics("figure/all_combo.jpg")
 ```
 </div>
@@ -217,7 +225,7 @@ exps["analyst", "Reproduction"] <- "different"
 exps["analysis_plan", "Reproduction"] <- "observed"
 exps["estimate", "Reproduction"] <- "different"
 exps["claim", "Reproduction"] <- "different"
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+scifigure::sci_figure(exps, hide_stages = hide_stages,
                       cols = cols)
 ```
 
@@ -232,7 +240,7 @@ exps["analyst", "Reproduction"] <- "different"
 exps["analysis_plan", "Reproduction"] <- "observed"
 exps["estimate", "Reproduction"] <- "incorrect"
 exps["claim", "Reproduction"] <- "incorrect"
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+scifigure::sci_figure(exps, hide_stages = hide_stages,
                       cols = cols)
 ```
 
@@ -241,7 +249,11 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
 
 <img src="figure/carp_2012_figure_full.jpg" style="width:600px; display: block; margin: auto;" alt="flow">
 
-Carp, Joshua. "The secret lives of experiments: methods reporting in the fMRI literature." Neuroimage 63.1 (2012): 289-300. [@carp2012secret]
+<div style="font-size:20pt">
+Carp (2012) "The secret lives of experiments: methods reporting in the fMRI literature." Neuroimage 63.1 (2012): 289-300.
+</div>
+<br>
+ [@carp2012secret]
 
 
 ## One Solution: Replication
@@ -256,6 +268,19 @@ scifigure::sci_figure(ee, hide_stages = hide_stages,
                       cols = cols)
 ```
 
+## Want External Replication
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+ee = exps
+ee[, "Reproduction"] = "observed"
+ee["analyst", "Reproduction"] = "different"
+ee["data", "Reproduction"] = "different"
+scifigure::sci_figure(ee, hide_stages = hide_stages,
+                      cols = cols)
+```
+
 
 ## Minimum Reproducibility Goal 
 
@@ -264,7 +289,7 @@ scifigure::sci_figure(ee, hide_stages = hide_stages,
 ```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
 nexps <- init_experiments(2, names = c("Original", "Reproduction"))
 nexps["analyst", "Reproduction"] <- "different"
-scifigure::sci_figure(nexps, hide_stages = hide_stages, diff = TRUE,
+scifigure::sci_figure(nexps, hide_stages = hide_stages,
                       cols = cols)
 ```
 
