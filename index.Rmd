@@ -120,14 +120,6 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, cols = cols)
 
 > "differences were on average 8.8±6.6% (range 1.3–64.0%) (volume) and 2.8±1.3% (1.1–7.7%) (cortical thickness). About a factor two smaller differences were detected between Macintosh and Hewlett-Packard workstations and between OSX 10.5 and OSX 10.6. **The observed differences are similar in magnitude as effect sizes reported in accuracy evaluations and neurodegenerative studies.** "
 
-## Controversy in Neuroimaging: Won't Reproduce!
-
-<div style="font-size:10pt">[@Patil066803]</div>
-
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
-                      cols = cols)
-```
 
 ## Solutions: Containers
 
@@ -143,6 +135,16 @@ Singularity
 knitr::include_graphics("figure/singularity.png")
 ```
 </div>
+
+
+## Same figure: different way
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+                      cols = cols)
+```
 
 
 ## Not Same as "Choosing a Pipeline"
@@ -167,7 +169,7 @@ knitr::include_graphics("figure/all_combo.jpg")
 ```
 </div>
 <div class="right-half" style="font-size:50pt">
-See which predicts outcome of interest
+See which predicts outcome of interest. Cross validated, of course
 </div>
 
 
@@ -186,7 +188,7 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
                       cols = cols)
 ```
 
-## Many Think "Incorrect"
+## Original Authors May Claim "Incorrect"
 
 <div style="font-size:10pt">[@Patil066803]</div>
 
@@ -277,14 +279,6 @@ Complete pipeline
   </div>
 </div>
 
-
-## What we need: tutorials
-
-```{r, out.width = "95%"}
-knitr::include_graphics("figure/tutorials.png")
-```
-
-
 ## Many Cases in Neuroimaging: Why?
 
 <div style="font-size:10pt">[@Patil066803]</div>
@@ -319,6 +313,11 @@ scifigure::sci_figure(exps, hide_stages = hide_stages)
 ## R packages to access these repositories
 
 - so if there, need ability to access
+
+2.  neurovault - access neurovault 
+8.  neurohcp - Human Connectome Project
+9.  Rxnat - XNAT interface (NITRC)
+
 
 ## Seldomly Reported Inclusion/Exclusion
 
