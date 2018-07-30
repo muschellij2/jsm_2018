@@ -322,7 +322,7 @@ exps["code", "Reproduction"] <- "unobserved"
 exps["analyst", "Reproduction"] <- "different"
 exps["estimate", "Reproduction"] <- "unobserved"
 exps["claim", "Reproduction"] <- "unobserved"
-scifigure::sci_figure(exps, hide_stages = hide_stages)
+scifigure::sci_figure(exps, hide_stages = hide_stages, cols = cols)
 ```
 
 
