@@ -73,7 +73,8 @@ knitr::include_graphics("figure/reproc_definition.jpg", dpi = NA)
 ```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
 library(scifigure)
 exps <- init_experiments(2, names = c("Original", "Reproduction"))
-scifigure::sci_figure(exps, showlegend = FALSE)
+cols = c("#D20000", "blue", "#CDCDCD", "black")
+scifigure::sci_figure(exps, showlegend = FALSE, cols = cols)
 ```
 
 ## Neuroimaging Reproducibility 
@@ -84,7 +85,8 @@ scifigure::sci_figure(exps, showlegend = FALSE)
 hide_stages = c("population", "question", "hypothesis", "experimental_design", 
 "experimenter")
 exps[ hide_stages, "Reproduction"] = "unobserved"
-scifigure::sci_figure(exps)
+scifigure::sci_figure(exps, cols = cols)
+exps[ hide_stages, "Reproduction"] = "observed"
 ```
 
 
@@ -95,7 +97,7 @@ scifigure::sci_figure(exps)
 ```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
 hide_stages = c("population", "question", "hypothesis", "experimental_design", 
 "experimenter", "analysis_plan")
-scifigure::sci_figure(exps, showlegend = FALSE, hide_stages = hide_stages)
+scifigure::sci_figure(exps, showlegend = FALSE, hide_stages = hide_stages, cols = cols)
 ```
 
 ## Controversy in Neuroimaging: Won't Reproduce!
@@ -108,17 +110,9 @@ exps["code", "Reproduction"] <- "observed"
 exps["analysis_plan", "Reproduction"] <- "observed"
 exps["estimate", "Reproduction"] <- "different"
 exps["claim", "Reproduction"] <- "different"
-scifigure::sci_figure(exps, hide_stages = hide_stages)
+scifigure::sci_figure(exps, hide_stages = hide_stages, cols = cols)
 ```
 
-
-## Controversy in Neuroimaging: Won't Reproduce!
-
-<div style="font-size:10pt">[@Patil066803]</div>
-
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
-```
 
 ## Software: Versions!
 
@@ -126,20 +120,58 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
 
 > "differences were on average 8.8±6.6% (range 1.3–64.0%) (volume) and 2.8±1.3% (1.1–7.7%) (cortical thickness). About a factor two smaller differences were detected between Macintosh and Hewlett-Packard workstations and between OSX 10.5 and OSX 10.6. **The observed differences are similar in magnitude as effect sizes reported in accuracy evaluations and neurodegenerative studies.** "
 
-
-## Minimum Reproducibility Goal 
+## Controversy in Neuroimaging: Won't Reproduce!
 
 <div style="font-size:10pt">[@Patil066803]</div>
 
 ```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-nexps <- init_experiments(2, names = c("Original", "Reproduction"))
-nexps["analyst", "Reproduction"] <- "different"
-scifigure::sci_figure(nexps, hide_stages = hide_stages)
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+                      cols = cols)
 ```
 
+## Solutions: Containers
+
+<div class="left-half">
+Docker
+```{r, out.width = "100%"}
+knitr::include_graphics("figure/docker.png")
+```
+</div>
+<div class="right-half">
+Singularity
+```{r, out.width = "100%"}
+knitr::include_graphics("figure/singularity.png")
+```
+</div>
 
 
-## Controversy: Different Pipelines
+## Not Same as "Choosing a Pipeline"
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["code", "Reproduction"] <- "different"
+exps["estimate", "Reproduction"] <- "different"
+exps["claim", "Reproduction"] <- "different"
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+                      cols = cols)
+```
+
+## No General Solutions for Pipeline Choices
+
+<div class="left-half">
+
+Many combinations [@yan2013comprehensive]:
+```{r, out.width = "80%"}
+knitr::include_graphics("figure/all_combo.jpg")
+```
+</div>
+<div class="right-half" style="font-size:50pt">
+See which predicts outcome of interest
+</div>
+
+
+## Different Pipelines give Different Results
 
 <div style="font-size:10pt">[@Patil066803]</div>
 
@@ -150,8 +182,25 @@ exps["analyst", "Reproduction"] <- "different"
 exps["analysis_plan", "Reproduction"] <- "observed"
 exps["estimate", "Reproduction"] <- "different"
 exps["claim", "Reproduction"] <- "different"
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+                      cols = cols)
 ```
+
+## Many Think "Incorrect"
+
+<div style="font-size:10pt">[@Patil066803]</div>
+
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+exps["data", "Reproduction"] <- "observed"
+exps["code", "Reproduction"] <- "different"
+exps["analyst", "Reproduction"] <- "different"
+exps["analysis_plan", "Reproduction"] <- "observed"
+exps["estimate", "Reproduction"] <- "incorrect"
+exps["claim", "Reproduction"] <- "incorrect"
+scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE,
+                      cols = cols)
+```
+
 
 ## It's typical to have lots of software choices
 
@@ -160,20 +209,7 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
 Carp, Joshua. "The secret lives of experiments: methods reporting in the fMRI literature." Neuroimage 63.1 (2012): 289-300. [@carp2012secret]
 
 
-## Controversy: Ground Truth? (Replication)
-
-<div style="font-size:10pt">[@Patil066803]</div>
-
-```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
-exps["estimate", "Reproduction"] <- "incorrect"
-exps["claim", "Reproduction"] <- "incorrect"
-exps["code", "Reproduction"] <- "different"
-scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
-```
-
-
-
-## Within-Population Replication (CV)
+## One Solution: Replication
 
 <div style="font-size:10pt">[@Patil066803]</div>
 
@@ -181,18 +217,21 @@ scifigure::sci_figure(exps, hide_stages = hide_stages, diff = TRUE)
 ee = exps
 ee[, "Reproduction"] = "observed"
 ee["data", "Reproduction"] = "different"
-scifigure::sci_figure(ee, hide_stages = hide_stages)
+scifigure::sci_figure(ee, hide_stages = hide_stages,
+                      cols = cols)
 ```
 
 
-# Genomics is one of the best examples of strives in Reproducibility: Data + Code Repositories
+## Minimum Reproducibility Goal 
 
-## Bioinformatics Repository: Bioconductor<br> <img src="figure/bioconductor.png" style="width:65%; display: inline; margin: auto;" alt="flow"> 
+<div style="font-size:10pt">[@Patil066803]</div>
 
-- centralized bioinformatics/genomics packages
-- large community/number of packages (> 1300)
-- **published tutorials and workflows**
-- additional requirements to CRAN (e.g. packages need vignettes)
+```{r, echo = FALSE, out.width = "85%", fig.align = "center"}
+nexps <- init_experiments(2, names = c("Original", "Reproduction"))
+nexps["analyst", "Reproduction"] <- "different"
+scifigure::sci_figure(nexps, hide_stages = hide_stages, diff = TRUE,
+                      cols = cols)
+```
 
 
 ```{r, cache = TRUE, echo = FALSE, results='hide'}
@@ -205,8 +244,6 @@ nr = nrow(tab)
 
 # <img src="figure/neuroconductor_brain_type_bbg.png" style="width:80%; display: inline; margin: auto;" alt="flow"><br> An R Platform for <br> Medical Imaging Analysis
 
-
-
 ## What is Neuroconductor?
 
 1.  A community of developers and users of R packages for imaging
@@ -215,10 +252,37 @@ nr = nrow(tab)
 3.  A team helping developers and users (John, Adi Gherman, Ciprian Crainiceanu, Brian Caffo)
 4.  A centralized repository of maintained packages
 
-
 ## Goal: Centralize the packages (currently `r nr`)
 
-  <img src="figure/neuroc_list_packages.png" style="width:100%; display: inline; margin: auto;" alt="flow">
+<img src="figure/neuroc_list_packages.png" style="width:100%; display: inline; margin: auto;" alt="flow">
+
+
+----
+<div class="container"> 
+<div id="left_col2"> 
+  <h2>Need Workflows</h2>
+<div style='font-size: 24pt;'>
+  
+- all R code
+    - interface/pipeline tool
+    - "native" R code
+
+Complete pipeline
+  
+  - preprocessing and analysis
+</div>
+  </div>    
+  <div id="right_col2">
+<img src="figure/workflow_edited_R.png" style="width:70%; display: block; margin: auto;" alt="flow">
+  </div>
+</div>
+
+
+## What we need: tutorials
+
+```{r, out.width = "95%"}
+knitr::include_graphics("figure/tutorials.png")
+```
 
 
 ## Many Cases in Neuroimaging: Why?
@@ -256,7 +320,6 @@ scifigure::sci_figure(exps, hide_stages = hide_stages)
 
 - so if there, need ability to access
 
-
 ## Seldomly Reported Inclusion/Exclusion
 
 <div style="font-size:10pt">[@Patil066803]</div>
@@ -286,57 +349,10 @@ scifigure::sci_figure(exps, hide_stages = hide_stages)
 knitr::include_graphics("figure/consort.jpg")
 ```
 
-## What we need: tutorials
-
-```{r, out.width = "95%"}
-knitr::include_graphics("figure/tutorials.png")
-```
-
-----
-<div class="container"> 
-<div id="left_col2"> 
-  <h2>Need Workflows</h2>
-<div style='font-size: 24pt;'>
-  
-- all R code
-    - interface/pipeline tool
-    - "native" R code
-
-Complete pipeline
-  
-  - preprocessing and analysis
-</div>
-  </div>    
-  <div id="right_col2">
-<img src="figure/workflow_edited_R.png" style="width:70%; display: block; margin: auto;" alt="flow">
-  </div>
-</div>
-
-
-## R Packages to Download Data
-
-1.  nitrcbot - download f/NITRC
-2.  neurovault - access neurovault 
-2.  MNITemplate - population-level "template" image
-3.  EveTemplate - different template image
-4.  kirby21 - sample data with multimodal imaging
-8.  neurohcp - Human Connectome Project
-9.  Rxnat - XNAT interface
-9.  malf.templates - template images f/label fusion
-
-
-## Publishing Software should be Rewarded
-
-- R Journal - see `rticles::rjournal_article()`
-- F1000 - https://f1000research.com/collections/Neuroconductor
-- JOSS - https://joss.theoj.org/
-- JSS - see `rticles::jss_article()`
-- `cranlogs` track downloads
-- neuroconductor API tracks downloads
-
 
 ## Conclusions
 
+- Reproducible code a minimum
 - Need data submitted (journals need to help)
   - but need easy tools to access the data
 - Analysis tools exist but need more
