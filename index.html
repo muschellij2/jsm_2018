@@ -231,7 +231,7 @@ Many combinations <span class="cite">(Yan et al. 2013)</span>:
 
 <p><img src="figure/all_combo.jpg" width="75%" /></p></div>
 
-<div class="right-half" style="font-size:50pt">
+<div style="font-size:50pt" class="right-half">
 <p>See which predicts outcome of interest. Cross validated, of course</p></div>
 
 </article></slide><slide class=""><hgroup><h2>Different Pipelines give Different Results</h2></hgroup><article  id="different-pipelines-give-different-results">
@@ -425,13 +425,93 @@ Need Workflows
 </ul></li>
 </ul>
 
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Thanks</h2></hgroup><article  id="thanks">
+
+</article></slide><slide class="segue dark nobackground level1"><hgroup class = 'auto-fadein'><h2>Example Packages</h2></hgroup><article  id="example-packages">
+
+</article></slide><slide class=""><hgroup><h2>ANTsR</h2></hgroup><article  id="antsr">
+
+<p>Based on ANTs: Advanced Normalization Tools</p>
+
+<ul>
+<li>State-of-the-art image processing pipelines</li>
+<li>Group has won challenges for imaging analysis</li>
+<li>Still actively maintained and developed</li>
+<li>Depends on the Insight ToolKit (ITK) medical image processing library</li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>Using R as a Pipeline Tool: fslr</h2></hgroup><article  id="using-r-as-a-pipeline-tool-fslr">
+
+<ul>
+<li><p><code>fslr</code> package - call FSL from R</p></li>
+<li><p>Requires FSL to be installed (only *nix systems)</p></li>
+</ul>
+
+<p><img src="figure/fslr_r_figure.png" style="width:45%; display: block; margin: auto;" alt="flow"></p>
+
+</article></slide><slide class=""><hgroup><h2>spm12r: Wrapper Functions for SPM</h2></hgroup><article  id="spm12r-wrapper-functions-for-spm">
+
+<ul>
+<li>Wraps some <code>MATLAB</code> code to call SPM scripts</li>
+<li>Using <code>R</code> syntax (but <code>MATLAB</code> runs the code)</li>
+<li>Built from SPM batch commands</li>
+<li>Shown in worked example: <a href='http://johnmuschelli.com/talks/fmri_task_processing/index.html#1' title=''>http://johnmuschelli.com/talks/fmri_task_processing/index.html#1</a></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>neurohcp: Human Connectome Project</h2></hgroup><article  id="neurohcp-human-connectome-project">
+
+<ul>
+<li>Allows you to download data from <a href='https://www.humanconnectome.org/' title=''>Human Connectome Project</a></li>
+<li>The 1200 Subjects release: behavioral and 3T MR imaging data from 1206 healthy young adult participants. Standardized protocol.</li>
+<li>Tutorial: <a href='http://johnmuschelli.com/neuroc/neurohcp' title=''>http://johnmuschelli.com/neuroc/neurohcp</a></li>
+</ul>
+
+</article></slide><slide class=""><hgroup><h2>malf.templates: Segmented T1-weighted Images</h2></hgroup><article  id="malf.templates-segmented-t1-weighted-images">
+
+<div style="font-size: 20pt;">
+<ul>
+<li>Data from the MICCAI 2012 Challenge on Multi-atlas Labelling Data</li>
+<li>From OASIS project and the labeled data as provided by Neuromorphometrics, Inc. (<a href='http://Neuromorphometrics.com/' title=''>http://Neuromorphometrics.com/</a>)</li>
+</ul></div>
+
+<p><img src="index_files/figure-html/unnamed-chunk-23-1.png" width="720" /></p>
+
+</article></slide><slide class=""><hgroup><h2>Current limitations</h2></hgroup><article  id="current-limitations">
+
+<div style="font-size: 28pt;" id="left_col">
+<ul>
+<li>R is cross platform, but some packages that depend on *nix system</li>
+<li>Still in beta testing, but more likely to incorporate requests</li>
+<li>Rcpp requires compiled code, (see below)</li>
+<li>Licenses with data can be tricky</li>
+</ul></div>
+
+<img src="figure/install_bomb.jpg" style="width:40%;" alt="neurohacking">
+
+<div style="font-size: 10pt;">
+<p>Image from: <a href='https://imgflip.com/i/22gplr' title=''>https://imgflip.com/i/22gplr</a></p></div>
+
+</article></slide><slide class=""><hgroup><h2>Training we are providing</h2></hgroup><article  id="training-we-are-providing">
+
+<div class="container">
+<div style="font-size: 28pt;" class="left-half">
+Coursera Course: Introduction to Neurohacking In R</div>
+
+<div style="font-size: 28pt;" class="right-half">
+<img src="figure/neurohacking_logo.png" style="width:40%;" alt="neurohacking"></div>
+
+<p><a href='https://www.coursera.org/learn/neurohacking/' title=''>https://www.coursera.org/learn/neurohacking/</a></p>
+
+<div style="font-size: 28pt;">
+<p><a href='http://johnmuschelli.com/imaging_in_r/' title=''>http://johnmuschelli.com/imaging_in_r/</a> ENAR 2018</p></div></div>
+
 </article></slide><slide class=""><hgroup><h2>Bibliography</h2></hgroup><article  id="bibliography">
 
 <div style = "font-size: 12pt">
 
 
 
-<div id="refs" class="references">
+<div class="references" id="refs">
 <div id="ref-carp2012secret">
 <p>Carp, Joshua. 2012. “The Secret Lives of Experiments: Methods Reporting in the fMRI Literature.” <em>Neuroimage</em> 63 (1). Elsevier:289–300.</p></div>
 
